@@ -7,6 +7,11 @@ double ConductionAlpha                = .25;
 double ViscosityAlpha                 = .25;
 
 
+/* Total inputs into function = 10 + 16 + 16 + 2 = 44
+ * Total outputs = 4*4 + 4 + 4 + 16 = 40
+ *  With combined evals, we expect 44 reads, 40 writes
+ *  With old evals, we have 271 reads, 40 writes
+ */
 void setFluidElement(const int oldEval,
                      const array primVars[10],
                      const array gCov[4][4],
@@ -23,7 +28,7 @@ void setFluidElement(const int oldEval,
                      array &q,
                      array &deltaP,
                      array NUp[4],
-                     array TUpDown[4],
+                     array TUpDown[4][4],
                     )
 {
   array rho         = af::max(primVars[0],rhoFloorInFluidElement);
